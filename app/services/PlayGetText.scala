@@ -53,9 +53,10 @@ class DefaultPlayGetText @Inject() (environment: Environment, configuration: Con
   private def enPlural(singular: String, plural: String, n: Long): String =
     if (n != 1) plural else singular
 
-  override def t(singular: String, args: Any*)(implicit lang: Lang): String = {
-    findPO(lang) map { po => translate(po.t(singular), args) } getOrElse { translate(singular, args) }
-  }
+  override def msg(key: String, args: Any*)(implicit lang: Lang): String = findPO(lang) map { po => translate(po.t(key), args) } getOrElse { translate(key, args) }
+
+  override def t(singular: String, args: Any*)(implicit lang: Lang): String = msg(singular, args:_ *)(lang)
+
 
   override def tn(singular: String, plural: String, n: Long, args: Any*)(implicit lang: Lang): String = {
     findPO(lang) map { po => translate(po.tn(singular, plural, n), args) } getOrElse { translate(enPlural(singular, plural, n), n +: args) }
@@ -69,7 +70,7 @@ class DefaultPlayGetText @Inject() (environment: Environment, configuration: Con
     findPO(lang) map { po => translate(po.tcn(ctx, singular, plural, n), args) } getOrElse { translate(enPlural(singular, plural, n), n +: args) }
   }
 
-  override def msg(key: String, args: Any*)(implicit lang: Lang): String = findPO(lang) map { po => translate(po.t(key), args) } getOrElse { translate(key, args) }
+
 }
 
 @Singleton
