@@ -26,6 +26,9 @@ class Module extends AbstractModule {
     bind(classOf[Counter]).to(classOf[AtomicCounter])
     //bind(classOf[MessagesApi]).to(classOf[MyMessagesApi])
     bind(classOf[PlayGetText]).to(classOf[DefaultPlayGetText])
+
+    bind(classOf[Test1]).to(classOf[MyTest])
+    bind(classOf[Test2]).to(classOf[MyTest])
   }
 
 }

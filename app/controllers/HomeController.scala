@@ -3,16 +3,16 @@ package controllers
 import javax.inject._
 
 import play.api._
-import play.api.i18n.{I18nSupport, Lang, Langs, MessagesApi}
+import play.api.i18n._
 import play.api.mvc._
-import services.{MyI18n, MyPlayI18n, PlayGetText}
+import services._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(val messagesApi: MessagesApi, implicit val myI18n: PlayGetText, lang: Langs) extends Controller with I18nSupport {
+class HomeController @Inject()(implicit val myI18n: PlayGetText, lang: Langs, test1: Test1, test2: Test2) extends Controller {
 
   /**
    * Create an Action to render an HTML page with a welcome message.
@@ -29,8 +29,10 @@ class HomeController @Inject()(val messagesApi: MessagesApi, implicit val myI18n
     //}
     println(myI18n.t("{0} tells {1}", "apple", "ms"))
     println(myI18n.tn("I have a {1}", "I have {0} {2}", 1, "dog", "dogs"))
-    println(messagesApi("constraint.max", 100))
-    println(messagesApi("error.real.precision", 5, 3))
+    println(Messages("constraint.max", 100))
+    println(Messages("error.real.precision", 5, 3))
+    println(test1.test1)
+    println(test2.test2)
     Ok(views.html.index("Your new application is ready."))
 
   }
